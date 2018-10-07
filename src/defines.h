@@ -1,0 +1,9 @@
+#ifndef ESP32_DEFINES_H
+#define ESP32_DEFINES_H
+
+#define WLAN_SSID "YOUR_SSID"
+#define PASSWORD "YOUR_PASSWORD"
+
+#define DATA_SIZE 6
+
+#endif //ESP32_DEFINES_H
