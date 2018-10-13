@@ -10,6 +10,6 @@
 extern WebServer server;
 
 extern void handle_request_body();
-extern void http_init(queue_data_t * queue_data1);
+extern void http_init(QueueHandle_t *queue_data1);
 
 #endif //ESP32_HTTP_H

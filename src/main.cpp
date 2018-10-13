@@ -13,16 +13,18 @@
 #include "structs.h"
 #include "http.h"
 #include "mode.h"
+#include "gpio.h"
 
-queue_data_t queue_data;
+QueueHandle_t queue_data;
 
 void setup() {
 
     Serial.begin(115200);
 
-    queue_data = {.queue_size = DATA_SIZE, .queue =  xQueueCreate(DATA_SIZE, sizeof(color_data_t))};
+    queue_data = xQueueCreate(QUEUE_SIZE, sizeof(color_data_t));
 
     http_init(&queue_data);
+    gpio_init();
 
     xTaskCreatePinnedToCore(led_task,   /* Function to implement the task */
                             "led_task", /* Name of the task */

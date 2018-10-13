@@ -5,11 +5,6 @@
 #include "defines.h"
 
 typedef struct {
-    uint8_t queue_size ;
-    QueueHandle_t queue;
-}queue_data_t;
-
-typedef struct {
     uint8_t red;
     uint8_t green;
     uint8_t blue;
@@ -19,7 +14,7 @@ typedef struct {
 typedef struct {
     color_t color_array[DATA_SIZE];
     uint8_t time;
-    char mode[10];
+    char mode[15];
     uint8_t number_of_colors;
 
 }color_data_t;

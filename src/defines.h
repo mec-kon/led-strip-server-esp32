@@ -5,5 +5,10 @@
 #define PASSWORD "YOUR_PASSWORD"
 
 #define DATA_SIZE 6
+#define QUEUE_SIZE 3
+
+#define GPIO_RED 1
+#define GPIO_GREEN 3
+#define GPIO_BLUE 2
 
 #endif //ESP32_DEFINES_H

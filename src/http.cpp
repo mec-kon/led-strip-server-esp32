@@ -2,16 +2,16 @@
 #include "structs.h"
 
 
-queue_data_t *queue_data_http;
+QueueHandle_t *queue_data_http;
 color_data_t color_data;
 
 WebServer server(80);
 const char *ssid = WLAN_SSID;
 const char *password = PASSWORD;
 
-void parse_json_data(String *message){
-    StaticJsonBuffer<300> JSONBuffer;
-    JsonObject& parsed = JSONBuffer.parseObject(*message);
+void parse_json_data(String *message) {
+    StaticJsonBuffer<800> JSONBuffer;
+    JsonObject &parsed = JSONBuffer.parseObject(*message);
     if (!parsed.success()) {   //Check for errors in parsing
         Serial.println("Parsing failed");
         delay(5000);
@@ -20,7 +20,7 @@ void parse_json_data(String *message){
 
     Serial.println("Parsing Array");
     const char *mode1;
-    for(uint8_t i = 0; i<DATA_SIZE; i++){
+    for (uint8_t i = 0; i < DATA_SIZE; i++) {
         color_data.color_array[i].red = parsed["color_array"][i]["color_red"];
         color_data.color_array[i].green = parsed["color_array"][i]["color_green"];
         color_data.color_array[i].blue = parsed["color_array"][i]["color_blue"];
@@ -35,7 +35,7 @@ void parse_json_data(String *message){
 
 void handle_request_body() { //Handler for the body path
 
-    if (server.hasArg("plain")== false){ //Check if body received
+    if (server.hasArg("plain") == false) { //Check if body received
         server.send(200, "text/plain", "Body not received");
         return;
     }
@@ -45,10 +45,10 @@ void handle_request_body() { //Handler for the body path
     parse_json_data(&message);
 
     Serial.println("Array parsed, sending Queue");
-    xQueueSend(queue_data_http->queue, &color_data, portMAX_DELAY);
+    xQueueSend(*queue_data_http, &color_data, portMAX_DELAY);
 }
 
-void http_init(queue_data_t * queue_data1){
+void http_init(QueueHandle_t *queue_data1) {
 
     Serial.println("HTTP_TASK");
 
